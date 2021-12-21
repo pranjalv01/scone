@@ -1,0 +1,48 @@
+#!/bin/bash
+name: $TRAINING_POLICY_NAME
+version: "0.3"
+
+# Access control:
+
+access_policy:
+  read:
+    - CREATOR
+    - $DATAOWNER_CREDENTIAL
+  update:
+    - CREATOR
+
+services:
+  - name: training
+    image_name: training_image
+    command: python /app/train.py
+    mrenclaves:
+      - "$MRENCLAVE_TRAINING"
+    pwd: /
+    fspf_path: /fspf.pb
+    fspf_key: "$FSPF_KEY"
+    fspf_tag: "$FSPF_TAG"
+
+images:
+  - name: training_image
+    volumes:
+      - name: encrypted_output_volume
+        path: /encrypted-output
+      - name: encrypted_input_volume
+        path: /encrypted-input
+
+volumes:
+  # No fspf key and tag: an encrypted volume will be automatically generated
+  # on the first run
+  - name: encrypted_output_volume
+    export:
+      - session: $OUTPUT_POLICY_NAME # export encrypted volume from output policy session
+  - name: encrypted_input_volume
+    import:
+      session: $INPUT_POLICY_NAME
+      volume: encrypted_input_volume
+
+security:
+   attestation:
+    tolerate: [debug-mode, hyperthreading, outdated-tcb]
+    ignore_advisories: "*"
+                              
