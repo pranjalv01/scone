@@ -1,0 +1,138 @@
+Building the base image that contains the SCONE CLI and python with all necessary dependencies.
+This is necessary to protect the python dependencies against malicious code injections.
+Sending build context to Docker daemon  885.2kB^M^M
+Step 1/3 : FROM registry.scontain.com:5050/lequocdo/securetf:scone5.2.1-tensorflow2.4.1
+ ---> 7d1f5e0e7229
+Step 2/3 : WORKDIR /
+ ---> Using cache
+ ---> 76d49db23af6
+Step 3/3 : ENTRYPOINT ["/bin/sh"]
+ ---> Using cache
+ ---> dbe2c93b2518
+Successfully built dbe2c93b2518
+Successfully tagged scone-tensorflow:base
+
+Now, we enter the base image to record the trusted state of the python
+dependencies and encrypt the application.
+export SCONE_QUEUES=1^M
+export SCONE_SLOTS=256^M
+export SCONE_SIGPIPE=0^M
+export SCONE_MMAP32BIT=0^M
+export SCONE_SSPINS=100^M
+export SCONE_SSLEEP=4000^M
+export SCONE_TCS=8^M
+export SCONE_LOG=ERROR^M
+export SCONE_HEAP=8589934592^M
+export SCONE_STACK=2097152^M
+export SCONE_CONFIG=/opt/scone/etc/scone-cli.conf^M
+export SCONE_ESPINS=10000^M
+export SCONE_MODE=sim^M
+export SCONE_ALLOW_DLOPEN=yes (unprotected)^M
+export SCONE_MPROTECT=no^M
+export SCONE_FORK=no^M
+musl version: 1.1.24^M
+SCONE version: 5.2.1-54-gd0585decf-sergei/glibc-loader (Tue Mar 30 13:38:19 2021 +0000) ^M
+Enclave hash: 2be065fd7f652c5bf8903920039b99ab1aa508a2f6b43e5a6cdc52e5f30e8027^M
+Created empty file system protection file in fspf.pb. AES-GCM tag: 85c0083591b530fa90a6ca0dd3857b7f^M
+export SCONE_QUEUES=1^M
+export SCONE_SLOTS=256^M
+export SCONE_SIGPIPE=0^M
+export SCONE_MMAP32BIT=0^M
+export SCONE_SSPINS=100^M
+export SCONE_SSLEEP=4000^M
+export SCONE_TCS=8^M
+export SCONE_LOG=ERROR^M
+export SCONE_HEAP=8589934592^M
+export SCONE_STACK=2097152^M
+export SCONE_CONFIG=/opt/scone/etc/scone-cli.conf^M
+export SCONE_ESPINS=10000^M
+export SCONE_MODE=sim^M
+export SCONE_ALLOW_DLOPEN=yes (unprotected)^M
+export SCONE_MPROTECT=no^M
+export SCONE_FORK=no^M
+musl version: 1.1.24^M
+SCONE version: 5.2.1-54-gd0585decf-sergei/glibc-loader (Tue Mar 30 13:38:19 2021 +0000) ^M
+Enclave hash: 2be065fd7f652c5bf8903920039b99ab1aa508a2f6b43e5a6cdc52e5f30e8027^M
+Added region /usr/lib/ to file system protection file fspf.pb new AES-GCM tag: 626f3f02877dc20bc7a76e3c622b62d4^M
+export SCONE_QUEUES=1^M
+export SCONE_SLOTS=256^M
+export SCONE_SIGPIPE=0^M
+export SCONE_MMAP32BIT=0^M
+export SCONE_SSPINS=100^M
+export SCONE_SSLEEP=4000^M
+export SCONE_TCS=8^M
+export SCONE_LOG=ERROR^M
+export SCONE_HEAP=8589934592^M
+export SCONE_STACK=2097152^M
+export SCONE_CONFIG=/opt/scone/etc/scone-cli.conf^M
+export SCONE_ESPINS=10000^M
+export SCONE_MODE=sim^M
+export SCONE_ALLOW_DLOPEN=yes (unprotected)^M
+export SCONE_MPROTECT=no^M
+export SCONE_FORK=no^M
+musl version: 1.1.24^M
+SCONE version: 5.2.1-54-gd0585decf-sergei/glibc-loader (Tue Mar 30 13:38:19 2021 +0000) ^M
+Enclave hash: 2be065fd7f652c5bf8903920039b99ab1aa508a2f6b43e5a6cdc52e5f30e8027^M
+Added files to file system protection file fspf.pb new AES-GCM tag: a6b5e4923fbbb37249c980f68a7329c3^M
+export SCONE_QUEUES=1^M
+export SCONE_SLOTS=256^M
+export SCONE_SIGPIPE=0^M
+export SCONE_MMAP32BIT=0^M
+export SCONE_SSPINS=100^M
+export SCONE_SSLEEP=4000^M
+export SCONE_TCS=8^M
+export SCONE_LOG=ERROR^M
+export SCONE_HEAP=8589934592^M
+export SCONE_STACK=2097152^M
+export SCONE_CONFIG=/opt/scone/etc/scone-cli.conf^M
+export SCONE_ESPINS=10000^M
+export SCONE_MODE=sim^M
+export SCONE_ALLOW_DLOPEN=yes (unprotected)^M
+export SCONE_MPROTECT=no^M
+export SCONE_FORK=no^M
+musl version: 1.1.24^M
+SCONE version: 5.2.1-54-gd0585decf-sergei/glibc-loader (Tue Mar 30 13:38:19 2021 +0000) ^M
+Enclave hash: 2be065fd7f652c5bf8903920039b99ab1aa508a2f6b43e5a6cdc52e5f30e8027^M
+Added region /app to file system protection file fspf.pb new AES-GCM tag: 898772eac5cfd7c932b472814f09dc6c^M
+export SCONE_QUEUES=1^M
+export SCONE_SLOTS=256^M
+export SCONE_SIGPIPE=0^M
+export SCONE_MMAP32BIT=0^M
+export SCONE_SSPINS=100^M
+export SCONE_SSLEEP=4000^M
+export SCONE_TCS=8^M
+export SCONE_LOG=ERROR^M
+export SCONE_HEAP=8589934592^M
+export SCONE_STACK=2097152^M
+export SCONE_CONFIG=/opt/scone/etc/scone-cli.conf^M
+export SCONE_ESPINS=10000^M
+export SCONE_MODE=sim^M
+export SCONE_ALLOW_DLOPEN=yes (unprotected)^M
+export SCONE_MPROTECT=no^M
+export SCONE_FORK=no^M
+musl version: 1.1.24^M
+SCONE version: 5.2.1-54-gd0585decf-sergei/glibc-loader (Tue Mar 30 13:38:19 2021 +0000) ^M
+Enclave hash: 2be065fd7f652c5bf8903920039b99ab1aa508a2f6b43e5a6cdc52e5f30e8027^M
+Added files to file system protection file fspf.pb new AES-GCM tag: fb84c877f2f3d7ca0dbf1c8ca7ebaced^M
+export SCONE_QUEUES=1^M
+export SCONE_SLOTS=256^M
+export SCONE_SIGPIPE=0^M
+export SCONE_MMAP32BIT=0^M
+export SCONE_SSPINS=100^M
+export SCONE_SSLEEP=4000^M
+export SCONE_TCS=8^M
+export SCONE_LOG=ERROR^M
+export SCONE_HEAP=8589934592^M
+export SCONE_STACK=2097152^M
+export SCONE_CONFIG=/opt/scone/etc/scone-cli.conf^M
+export SCONE_ESPINS=10000^M
+export SCONE_MODE=sim^M
+export SCONE_ALLOW_DLOPEN=yes (unprotected)^M
+export SCONE_MPROTECT=no^M
+export SCONE_FORK=no^M
+musl version: 1.1.24^M
+SCONE version: 5.2.1-54-gd0585decf-sergei/glibc-loader (Tue Mar 30 13:38:19 2021 +0000) ^M
+Enclave hash: 2be065fd7f652c5bf8903920039b99ab1aa508a2f6b43e5a6cdc52e5f30e8027^M
+Encrypted file system protection file fspf.pb AES-GCM tag: 88cde40205146d318e61c9116795d53f key: d9efe87b11d39f495988d4fe32f2d470ed0b51df1a8c05278912ab0e78be7e30^M
+
+Update the training code owner's session file with the FSPF key and tag now

@@ -1,0 +1,19 @@
+FROM registry.scontain.com:5050/sconecuratedimages/crosscompilers:ubuntu18.04-scone5.2.1 as build
+RUN apt-get update && apt-get install -y \
+    bats \
+    make
+COPY . /copy_files
+WORKDIR /copy_files
+RUN make with-scone
+
+FROM alpine:3.7
+
+COPY --from=build /opt/scone/lib/libc.scone* /opt/scone/lib/
+COPY --from=build /opt/scone/cross-compiler/x86_64-linux-musl/lib/libgcc_s.so.1 /opt/scone/lib
+COPY --from=build /opt/scone/lib/ld-scone* /opt/scone/lib
+COPY --from=build /copy_files/copy_files /
+
+ENV SCONE_HEAP=1G
+ENV SCONE_MODE=SIM
+
+ENTRYPOINT ["/copy_files"]

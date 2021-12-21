@@ -1,0 +1,44 @@
+version: '3.2'
+services:
+    las:
+        image: registry.scontain.com:5050/sconecuratedimages/services:las-scone5.3.0
+        devices:
+         - "/dev/sgx/enclave"
+         - "/dev/sgx/provision"
+    cas:
+        image: registry.scontain.com:5050/sconecuratedimages/services:cas.preprovisioned-scone5.3.0
+        devices:
+         - "/dev/sgx/enclave"
+        depends_on:
+         - las
+    input:
+        build:
+            context: analytics/input
+        environment:
+         - SCONE_MODE=hw
+         - SCONE_LOG=7
+         - SCONE_CONFIG_ID=input_policy/input
+        devices:
+         - "/dev/sgx/enclave"
+        volumes:
+         - ./volumes/data:/unencrypted-data
+         - ./volumes/encrypted-input:/encrypted-input
+        depends_on:
+         - las
+         - cas
+    training:
+        build:
+           context: analytics/training
+        environment:
+         - SCONE_MODE=hw
+         - SCONE_SYSLIBS=1
+         - SCONE_LOG=7
+         - SCONE_HEAP=8G
+         - SCONE_ALLOW_DLOPEN=2
+         - SCONE_FORK=1
+         - SCONE_CONFIG_ID=training_policy/training
+        volumes:
+         - ./volumes/encrypted-output:/encrypted-output
+         - ./volumes/encrypted-input:/encrypted-input
+        devices:
+"docker-compose.yml" 73L, 2107C                                                                                                                       

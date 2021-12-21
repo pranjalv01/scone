@@ -1,0 +1,15 @@
+FROM scone-tensorflow:base
+
+ADD image_files /
+
+ADD scone.conf /opt/scone.conf
+
+ENV SCONE_CONFIG=/opt/scone.conf
+
+ENV SCONE_ESPINS=1000000
+
+ENV SCONE_SSPINS=1000000
+
+RUN mkdir /encrypted-output
+
+CMD ["/usr/bin/python"]
